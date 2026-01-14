@@ -1,15 +1,21 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'node18'
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/vijayendra-b/ci-cd-poc.git'
+            }
+        }
+
+        stage('Verify Node') {
+            steps {
+                sh '''
+                export PATH="/opt/homebrew/opt/node@18/bin:$PATH"
+                node -v
+                npm -v
+                '''
             }
         }
 
